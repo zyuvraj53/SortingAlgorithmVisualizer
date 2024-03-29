@@ -18,7 +18,7 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
         noOfRects = 100;
     }
 
-    AnimationPanel() throws InterruptedException {
+    AnimationPanel() {
 
         // The animation panel
         //this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -142,7 +142,7 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
     }
 
     @Override
-    public void bubbleSort() throws InterruptedException {
+    public void bubbleSort() {
         for(int k = 1; k <= noOfRects - 1; k++) {
             int flag = 0;
             for (int i = 0; i <= noOfRects - k - 1; i++) {
@@ -150,10 +150,7 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
                     int temp = rectangles[i].getHeight();
                     rectangles[i].setHeight(rectangles[i + 1].getHeight());
                     rectangles[i + 1].setHeight(temp);
-                    //! Thread.sleep(10);
                     flag = 1;
-                    //! paintImmediately(200, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-                    //! paintImmediately(this.getBounds()); // works if only one screen is present
 
                     paintImmediately(0, 0, 800, 600);
 
@@ -174,11 +171,7 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == playButton) {
-            try {
                 bubbleSort();
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
         }
     }
 }

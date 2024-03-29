@@ -18,7 +18,7 @@ public class MyPanel extends JPanel {
     static boolean isReversed;
     static boolean isFewUnique;
 
-    MyPanel() throws InterruptedException {
+    MyPanel() {
 
         this.setPreferredSize(new Dimension(800, 600));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
