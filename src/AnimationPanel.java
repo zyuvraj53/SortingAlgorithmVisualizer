@@ -188,6 +188,182 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
         MyPanel.isReversed = false;
         MyPanel.isFewUnique = false;
     }
+    @Override
+    public void insertionSort() {
+         
+        for (int i = 1; i < noOfRects; i++) {
+            int currentValue = rectangles[i].getHeight();
+            int j = i - 1;
+            while (j >= 0 && rectangles[j].getHeight() > currentValue) {
+                rectangles[j + 1].setHeight(rectangles[j].getHeight());
+                j = j - 1;
+                paintImmediately(0, 0, 800, 600);
+            }
+            rectangles[j + 1].setHeight(currentValue);
+        }
+        MyPanel.isRandom = false;
+        MyPanel.isNearlySorted = false;
+        MyPanel.isReversed = false;
+        MyPanel.isFewUnique = false;
+    }
+     @Override
+     public void mergeSort() {
+        mergeSortHelper(0, noOfRects - 1);
+        MyPanel.isRandom = false;
+        MyPanel.isNearlySorted = false;
+        MyPanel.isReversed = false;
+        MyPanel.isFewUnique = false;
+    }
+    
+    private void mergeSortHelper(int low, int high) {
+        if (low < high) {
+            int mid = (low + high) / 2;
+            mergeSortHelper(low, mid);
+            mergeSortHelper(mid + 1, high);
+            merge(low, mid, high);
+            paintImmediately(0, 0, 800, 600);
+        }
+    }
+    
+    private void merge(int low, int mid, int high) {
+        Rectangle[] temp = new Rectangle[noOfRects];
+        int i = low;
+        int j = mid + 1;
+        int k = low;
+    
+        while (i <= mid && j <= high) {
+            if (rectangles[i].getHeight() <= rectangles[j].getHeight()) {
+            paintImmediately(0, 0, 800, 600);
+
+                temp[k++] = rectangles[i++];
+            } else {
+                temp[k++] = rectangles[j++];
+            paintImmediately(0, 0, 800, 600);
+
+            }
+        }
+    
+        while (i <= mid) {
+            temp[k++] = rectangles[i++];
+            paintImmediately(0, 0, 800, 600);
+
+        }
+    
+        while (j <= high) {
+            temp[k++] = rectangles[j++];
+            paintImmediately(0, 0, 800, 600);
+
+        }
+    
+        for (i = low; i <= high; i++) {
+            rectangles[i] = temp[i];
+            paintImmediately(0, 0, 800, 600);
+
+        }
+    }
+     @Override
+     public void quickSort() {
+        quickSortHelper(0, noOfRects - 1);
+        MyPanel.isRandom = false;
+        MyPanel.isNearlySorted = false;
+        MyPanel.isReversed = false;
+        MyPanel.isFewUnique = false;
+    }
+    
+    private void quickSortHelper(int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(low, high);
+            quickSortHelper(low, pivotIndex - 1);
+            quickSortHelper(pivotIndex + 1, high);
+        }
+    }
+    
+    private int partition(int low, int high) {
+        int pivot = rectangles[high].getHeight();
+        int i = low - 1;
+    
+        for (int j = low; j < high; j++) {
+            if (rectangles[j].getHeight() < pivot) {
+                i++;
+                swap(i, j);
+            paintImmediately(0, 0, 800, 600);
+
+            }
+        }
+    
+        swap(i + 1, high);
+        return i + 1;
+    }
+    
+    private void swap(int i, int j) {
+        int temp = rectangles[i].getHeight();
+        rectangles[i].setHeight(rectangles[j].getHeight());
+        paintImmediately(0, 0, 800, 600);
+
+        rectangles[j].setHeight(temp);
+        paintImmediately(0, 0, 800, 600);
+
+    }
+
+    @Override
+    public void heapSort() {
+
+        for (int i = noOfRects / 2 - 1; i >= 0; i--) {
+
+            heapify(noOfRects, i);
+        }
+        
+        for (int i = noOfRects - 1; i > 0; i--) {
+            swapHeap(0, i);
+            
+            heapify(i, 0);
+            
+            paintImmediately(0, 0, 800, 600);
+        }
+
+        MyPanel.isRandom = false;
+        MyPanel.isNearlySorted = false;
+        MyPanel.isReversed = false;
+        MyPanel.isFewUnique = false;
+    }
+    
+    private void heapify(int n, int i) {
+        int largest = i; 
+        int left = 2 * i + 1; 
+        int right = 2 * i + 2;
+        
+        if (left < n && rectangles[left].getHeight() > rectangles[largest].getHeight()) {
+            largest = left;
+            paintImmediately(0, 0, 800, 600);
+
+        }
+        
+        if (right < n && rectangles[right].getHeight() > rectangles[largest].getHeight()) {
+            largest = right;
+            paintImmediately(0, 0, 800, 600);
+
+        }
+        
+        if (largest != i) {
+            swapHeap(i, largest);
+            paintImmediately(0, 0, 800, 600);
+            
+            
+            heapify(n, largest);
+        }
+    }
+    
+    private void swapHeap(int i, int j) {
+        int temp = rectangles[i].getHeight();
+        rectangles[i].setHeight(rectangles[j].getHeight());
+        paintImmediately(0, 0, 800, 600);
+
+        rectangles[j].setHeight(temp);
+        paintImmediately(0, 0, 800, 600);
+
+    }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -197,6 +373,14 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
                 bubbleSort();
             else if(selectedItem.equals("Selection Sort"))
                 selectionSort();
+            else if(selectedItem.equals("Insertion Sort"))
+                insertionSort();    
+            else if(selectedItem.equals("Merge Sort"))
+                mergeSort();    
+            else if(selectedItem.equals("Quick Sort"))
+                quickSort();    
+            else if(selectedItem.equals("Heap Sort"))
+                heapSort();    
         }
     }
 }
