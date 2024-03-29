@@ -169,9 +169,34 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
     }
 
     @Override
+    public void selectionSort() {
+        for(int k = 0; k <= noOfRects - 2; k++) {
+            int kMin = k;
+            for (int i = k + 1; i <= noOfRects - 1; i++) {
+                if (rectangles[i].getHeight() < rectangles[kMin].getHeight()) {
+                    kMin = i;
+                    paintImmediately(0, 0, 800, 600);
+                }
+            }
+                    int temp = rectangles[k].getHeight();
+                    rectangles[k].setHeight(rectangles[kMin].getHeight());
+                    rectangles[kMin].setHeight(temp);
+        }
+
+        MyPanel.isRandom = false;
+        MyPanel.isNearlySorted = false;
+        MyPanel.isReversed = false;
+        MyPanel.isFewUnique = false;
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == playButton) {
+            String selectedItem = SortingAlgorithms.sortsComboBox.getSelectedItem().toString();
+            if(selectedItem.equals("Bubble Sort"))
                 bubbleSort();
+            else if(selectedItem.equals("Selection Sort"))
+                selectionSort();
         }
     }
 }

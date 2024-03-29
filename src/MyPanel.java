@@ -49,6 +49,8 @@ public class MyPanel extends JPanel {
         leftPanel.add(reversed);
         leftPanel.add(fewUnique);
 
+        leftPanel.add(SortingAlgorithms.sortsComboBox);
+
         //adding the animation panel
         AnimationPanel animationPanel = new AnimationPanel();
         isRandom = true;
