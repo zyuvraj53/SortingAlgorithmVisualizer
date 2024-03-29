@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -15,7 +16,7 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
     JButton playButton;
 
     static {
-        noOfRects = 50;
+        noOfRects = 100;
     }
 
     AnimationPanel() {
@@ -24,14 +25,18 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
         // this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         // ! this.setBounds(200, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setBackground(new Color(125, 50, 255));
-        rectangles = new Rectangle[noOfRects];
+        this.rectanglesArrayInit();
         // randomizing all the rectangles;
         this.randomize();
 
         // making a button to play the animation
         playButton = new JButton();
+
+        String imageFile = new File("").getAbsolutePath();
+        System.out.println(imageFile);
+
         ImageIcon playIcon = new ImageIcon(
-                "C:\\Users\\Yuvraj\\Desktop\\Java\\SortingAlgorithmsVisualizer\\src\\playButton.png"); // load the image
+                imageFile + "\\playButton.png"); // load the image
                                                                                                        // to a imageIcon
         Image playImage = playIcon.getImage(); // transform it
         Image newPlayImg = playImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -42,15 +47,18 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
 
     }
 
+    public void rectanglesArrayInit(){
+        rectangles = new Rectangle[noOfRects];
+    }
+
     public void randomize() {
         // setting a random height for all the rectangles
         Random random = new Random();
         for (int i = 0; i < noOfRects; i++) {
             rectangles[i] = new Rectangle(random.nextInt(0, (SCREEN_HEIGHT)));
-            System.out.println(rectangles[i].getHeight());
         }
         // setting width for all the rectangles
-        Rectangle.width = SCREEN_WIDTH / noOfRects;
+        Rectangle.width = (int) Math.ceil(SCREEN_WIDTH / noOfRects);
         repaint();
     }
 
@@ -67,7 +75,6 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
         Random random = new Random();
         for (int i = 0; i < noOfRects; i++) {
             rectangles[i] = new Rectangle(random.nextInt(0, (SCREEN_HEIGHT)));
-            System.out.println(rectangles[i].getHeight());
         }
 
         // nearly sorting the array
@@ -99,7 +106,6 @@ public class AnimationPanel extends JPanel implements SortingAlgorithms, ActionL
         }
         for (int i = 0; i < noOfRects; i++) {
             rectangles[i] = new Rectangle(fewUniqueArray[random.nextInt(fewUniqueArray.length)]);
-            System.out.println(rectangles[i].getHeight());
         }
         // setting width for all the rectangles
         Rectangle.width = SCREEN_WIDTH / noOfRects;
