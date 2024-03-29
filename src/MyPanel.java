@@ -23,11 +23,12 @@ public class MyPanel extends JPanel {
         this.setPreferredSize(new Dimension(800, 600));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        // adding the left panel, adding this first, as JPanel used FlowLayout by default
+        // adding the left panel, adding this first, as JPanel used FlowLayout by
+        // default
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(200, 600));
         leftPanel.setBackground(new Color(139, 84, 196));
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+        leftPanel.setLayout(new GridBagLayout());
         this.add(leftPanel);
 
         // adding radio button on the left panel
@@ -36,7 +37,6 @@ public class MyPanel extends JPanel {
         reversed = new JRadioButton("Reversed");
         fewUnique = new JRadioButton("Few Unique");
 
-        random.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0, 100), 20));
 
         buttonGroup = new ButtonGroup();
         buttonGroup.add(random);
@@ -44,14 +44,44 @@ public class MyPanel extends JPanel {
         buttonGroup.add(reversed);
         buttonGroup.add(fewUnique);
 
-        leftPanel.add(random);
-        leftPanel.add(nearlySorted);
-        leftPanel.add(reversed);
-        leftPanel.add(fewUnique);
+        // GridBagLayout for the buttons:
 
-        leftPanel.add(SortingAlgorithms.sortsComboBox);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 2, 200, 2);
 
-        //adding the animation panel
+        // col 0
+        gbc.gridx = 0;
+
+        // row 0
+        gbc.gridy = 0;
+
+        // increases components width by 10 pixels
+        gbc.ipadx = 50;
+
+        // increases components height by 50 pixels
+        gbc.ipady = 20;
+
+        leftPanel.add(SortingAlgorithms.sortsComboBox, gbc);
+
+        gbc.insets = new Insets(2, 2, 2, 2);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+
+        leftPanel.add(random, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        leftPanel.add(nearlySorted, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        leftPanel.add(reversed, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        leftPanel.add(fewUnique, gbc);
+
+        // GridBagLayout for the buttons End
+
+
+        // adding the animation panel
         AnimationPanel animationPanel = new AnimationPanel();
         isRandom = true;
         animationPanel.setPreferredSize(new Dimension(AnimationPanel.SCREEN_WIDTH, AnimationPanel.SCREEN_HEIGHT));
@@ -60,7 +90,7 @@ public class MyPanel extends JPanel {
         random.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isRandom){
+                if (!isRandom) {
                     animationPanel.randomize();
                     isRandom = true;
                     isNearlySorted = false;
@@ -72,7 +102,7 @@ public class MyPanel extends JPanel {
         nearlySorted.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isNearlySorted){
+                if (!isNearlySorted) {
                     animationPanel.nearlyRandomize();
                     isRandom = false;
                     isNearlySorted = true;
@@ -84,7 +114,7 @@ public class MyPanel extends JPanel {
         reversed.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isReversed){
+                if (!isReversed) {
                     animationPanel.reverse();
                     isRandom = false;
                     isNearlySorted = false;
@@ -96,7 +126,7 @@ public class MyPanel extends JPanel {
         fewUnique.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isFewUnique){
+                if (!isFewUnique) {
                     animationPanel.makeFewUnique();
                     isRandom = false;
                     isNearlySorted = false;
