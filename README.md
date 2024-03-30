@@ -1,4 +1,4 @@
-### Please make open the repository as its own workspace.
+### Please open the repository as its own workspace.
 ### open the terminal and type
 ```bash
 cd src
